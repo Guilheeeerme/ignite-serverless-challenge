@@ -2,8 +2,8 @@ service:
   name: ignite-serverless-challenge
 
 plugins:
-  - serverless-offline
   - serverless-webpack
+  - serverless-offline
   - serverless-dynamodb-local
 
 custom:
@@ -21,7 +21,7 @@ custom:
 
 provider:
   name: aws
-  region: us-east-1
+  region: sa-east-1
   runtime: nodejs14.x
   iamRoleStatements:
     - Effect: Allow
@@ -34,9 +34,9 @@ functions:
     handler: src/functions/createTodo/index.handle
     events:
       - http:
-        path: /todos/{userid}
-        method: POST
-        cors: true
+          path: /todos/{userid}
+          method: POST
+          cors: true
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -52,11 +52,11 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - dynamodb: Query
+          - dynamodb:Query
 
 resources:
   Resources:
-    CertificatesTable:
+    dbTodosUsers:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: users_todos
@@ -71,5 +71,5 @@ resources:
         KeySchema:
           - AttributeName: user_id
             KeyType: HASH
-          - AttibuteName: id
+          - AttributeName: id
             KeyType: RANGE
