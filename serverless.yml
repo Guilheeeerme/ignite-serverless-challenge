@@ -29,6 +29,19 @@ provider:
         - dynamodb:*
       Resource: "*"
 
+functions:
+  createTodo:
+    handler: src/functions/createTodo/index.handle
+    events:
+      - http:
+        path: /todos/{userid}
+        method: POST
+        cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+
 resources:
   Resources:
     CertificatesTable:
